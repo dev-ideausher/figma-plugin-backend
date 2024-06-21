@@ -54,4 +54,16 @@ module.exports = {
       useUnifiedTopology: true,
     },
   },
+  firebase: {
+    type: envVars.FIREBASE_TYPE,
+    project_id: envVars.FIREBASE_PROJECT_ID,
+    private_key_id: envVars.FIREBASE_PRIVATE_KEY_ID,
+    private_key: envVars.FIREBASE_PRIVATE_KEY,
+    client_email: envVars.FIREBASE_CLIENT_EMAIL,
+    client_id: envVars.FIREBASE_CLIENT_ID,
+    auth_uri: envVars.FIREBASE_AUTH_URI,
+    token_uri: envVars.FIREBASE_TOKEN_URI,
+    auth_provider_x509_cert_url: envVars.FIREBASE_AUTH_PROVIDER_CERT_URL,
+    universe__domain: envVars.FIREBASE_UNIVERSE_DOMAIN,
+  },
 };

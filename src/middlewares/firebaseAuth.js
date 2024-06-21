@@ -1,8 +1,9 @@
 const admin = require('firebase-admin');
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
+const config = require('../config/config');
 
-const serviceAccount = require('../../firebase-service-secret.json');
+const serviceAccount = config.firebase;
 const {authService} = require('../services');
 
 admin.initializeApp({
