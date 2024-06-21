@@ -38,9 +38,7 @@ Response Example:
       "keywords": ["Tag1", "Tag2"],
       "createdAt": "2024-06-21T12:00:00.000Z",
       "updatedAt": "2024-06-21T12:00:00.000Z"
-      // other fields as per your card schema
     }
-    // additional cards
   ],
   "totalPages": 3,
   "totalResults": 25
