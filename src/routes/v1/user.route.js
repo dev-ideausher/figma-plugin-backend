@@ -1,7 +1,7 @@
 const express = require('express');
 
 const validate = require('../../middlewares/validate');
-const firebaseAuth = require('../../middlewares/firebaseAuth');
+// const firebaseAuth = require('../../middlewares/firebaseAuth');
 const userValidation = require('../../validations/user.validation');
 
 const {userController} = require('../../controllers');
@@ -13,23 +13,17 @@ const router = express.Router();
 router.patch(
   '/updateDetails',
   fileUploadService.multerUpload.single('profilePic'),
-  firebaseAuth('All'),
   validate(userValidation.updateDetails),
   userController.updateUser
 );
 
 // for updating specific user preferences
-router.patch(
-  '/updatePreferences',
-  validate(userValidation.updateUserPreferences),
-  firebaseAuth('All'),
-  userController.updatePreferences
-);
+router.patch('/updatePreferences', validate(userValidation.updateUserPreferences), userController.updatePreferences);
 
 // for deleting a user
-router.delete('/:userId', validate(userValidation.deleteUser), firebaseAuth('Admin'), userController.deleteUser);
+router.delete('/:userId', validate(userValidation.deleteUser), userController.deleteUser);
 
 // to soft delete a user
-router.post('/delete/:userId', validate(userValidation.deleteUser), firebaseAuth('All'), userController.softDeleteUser);
+router.post('/delete/:userId', validate(userValidation.deleteUser), userController.softDeleteUser);
 
 module.exports = router;

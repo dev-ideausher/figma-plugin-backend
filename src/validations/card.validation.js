@@ -3,8 +3,10 @@ const {fileSchema} = require('./custom.validation');
 const {imageTypes, imgTypeToExtension} = require('../constants');
 
 const createCard = {
+  file: Joi.object()
+    .keys(fileSchema('image', imageTypes, Object.values(imgTypeToExtension)))
+    .required(),
   body: Joi.object().keys({
-    image: fileSchema('icon', imageTypes, Object.values(imgTypeToExtension)),
     id: Joi.string().required(),
     title: Joi.string().required(),
     keywords: Joi.string(),
