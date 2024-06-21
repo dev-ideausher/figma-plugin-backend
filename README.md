@@ -62,14 +62,16 @@ Request Body:
 **Request Body:**
 
 - `title` (required): Title of the card.
+- `id` (required): Id of the card.
 - `keywords` (required): Array of keywords/tags associated with the card.
-- `figmaLink` (optional): Link to the Figma design for the card.
+- `figmaLink` (required): Link to the Figma design for the card.
 - `image` (required): Image file (JPG or PNG format) to upload to AWS S3.
 
 **Request Example:**
 
 ```json
 {
+  "id": "1103",
   "title": "Card Title",
   "keywords": ["Tag1", "Tag2", "Tag3"],
   "figmaLink": "https://figma.com",
@@ -82,6 +84,7 @@ Request Body:
 ```json
 {
   "_id": "5678",
+  "id": "1103",
   "title": "Card Title",
   "keywords": ["Tag1", "Tag2", "Tag3"],
   "figmaLink": "https://figma.com",
