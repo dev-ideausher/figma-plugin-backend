@@ -12,7 +12,7 @@ router.get('/all', cardController.getAllCards);
 router.post(
   '/create',
   fileUploadService.multerUpload.single('image'),
-  validate(cardValidation.createCard),
+  //   validate(cardValidation.createCard),
   cardController.createCard
 );
 

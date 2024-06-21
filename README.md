@@ -8,7 +8,8 @@ Endpoint:
 GET /v1/cards/all
 ```
 
-Description: Returns a paginated list of cards based on optional filters and pagination parameters.
+Description: Returns a paginated list of cards based on optional filters and pagination parameters. Supports filtering
+by title and/or tags using regular expression matching.
 
 Parameters:
 
@@ -16,13 +17,13 @@ Parameters:
 - `limit` (optional, default: 10) - Number of items per page.
 - `sortBy` (optional, default: createdAt) - Field to sort by (e.g., `createdAt`, `title`).
 - `sortOrder` (optional, default: desc) - Sorting order (`asc` for ascending, `desc` for descending).
-- `title` (optional) - Search term for filtering cards by title using RegExp.
-- `keywords` (optional) - Comma-separated list of keywords for filtering cards by tags.
+- `searchKeyword` (optional) - Search term for filtering cards by title or tags using RegExp.
+- Additional filters: Any other custom filters can be passed, e.g., `platform`
 
 Request Example:
 
 ```
-GET /v1/cards/all?page=1&limit=10&sortBy=createdAt&sortOrder=desc&title=searchTerm&keywords=Tag1,Tag2
+GET /v1/cards/all?page=1&limit=10&sortBy=createdAt&sortOrder=desc&searchKeyword=searchTerm
 ```
 
 Response Example:
@@ -36,14 +37,22 @@ Response Example:
       "_id": "1234",
       "title": "Card Title",
       "keywords": ["Tag1", "Tag2"],
-      "createdAt": "2024-06-21T12:00:00.000Z",
-      "updatedAt": "2024-06-21T12:00:00.000Z"
+      "platform": "app"
     }
   ],
   "totalPages": 3,
   "totalResults": 25
 }
 ```
+
+### Notes:
+
+- If `searchKeyword` is provided, the API will perform a case-insensitive regular expression search across both the
+  `title` and `keywords` fields.
+- The `results` array contains the paginated list of cards matching the criteria, with each card object including `_id`,
+  `id`, `title`, `keywords`, and `platform` fields.
+- `totalPages` indicates the total number of pages available based on the pagination settings and total results.
+- `totalResults` specifies the total number of cards that match the query criteria.
 
 ### POST Route Documentation
 
@@ -66,6 +75,7 @@ Request Body:
 - `keywords` (required): Array of keywords/tags associated with the card.
 - `figmaLink` (required): Link to the Figma design for the card.
 - `image` (required): Image file (JPG or PNG format) to upload to AWS S3.
+- `platform` (required): Platform Name (e.g. - Mobile App, Web etc.).
 
 **Request Example:**
 
@@ -75,7 +85,8 @@ Request Body:
   "title": "Card Title",
   "keywords": ["Tag1", "Tag2", "Tag3"],
   "figmaLink": "https://figma.com",
-  "image": "<file data>"
+  "image": "<file data>",
+  "platform": "Mobile App"
 }
 ```
 
@@ -88,7 +99,8 @@ Request Body:
   "title": "Card Title",
   "keywords": ["Tag1", "Tag2", "Tag3"],
   "figmaLink": "https://figma.com",
-  "imageUrl": "https://example-bucket.s3.amazonaws.com/public/cards/card-image.jpg"
+  "imageUrl": "https://example-bucket.s3.amazonaws.com/public/cards/card-image.jpg",
+  "platform": "Mobile App"
 }
 ```
 

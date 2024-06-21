@@ -8,6 +8,7 @@ const cardSchema = new Schema({
   title: {type: String, required: true},
   keywords: {type: [String], required: true},
   figmaLink: {type: String, required: true},
+  platform: {type: String, required: true},
   imageUrl: {type: String, required: true},
 });
 

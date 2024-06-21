@@ -17,7 +17,7 @@ const getAllCards = catchAsync(async (req, res) => {
 
 const createCard = catchAsync(async (req, res) => {
   try {
-    const {title, id, keywords, figmaLink, imageUrl} = req.body;
+    const {title, id, keywords, figmaLink, imageUrl, platform} = req.body;
 
     const cardObj = {
       title,
@@ -25,6 +25,7 @@ const createCard = catchAsync(async (req, res) => {
       keywords: JSON.parse(keywords),
       figmaLink,
       imageUrl,
+      platform,
     };
 
     const result = await cardService.createCard(cardObj, req.file);

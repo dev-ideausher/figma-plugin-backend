@@ -11,6 +11,7 @@ const createCard = {
     title: Joi.string().required(),
     keywords: Joi.string(),
     figmaLink: Joi.string().required(),
+    platform: Joi.string().required(),
   }),
 };
 
