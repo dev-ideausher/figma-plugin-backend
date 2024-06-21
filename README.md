@@ -1,36 +1,100 @@
-# Node-starter-template-v2
+### GET Route Documentation
 
-1. Config - You can add your all configuation and external settings in this
-    - contains the validation and logic to export the env variables
-    - contains the loggers to handle custom logs, errors or exceptions etc occuring throughout the codebase be it internal or your own logs
+#### Retrieve All Cards
 
-2. Constants - contains the constant variables that could be types, options that are used in different models, validations, controllers etc
+Endpoint:
 
-3. Controllers - contains the function that takes over the request once its validated & authenticated by the middlewares. This is the place where you ensure all the checks/errorHandling, data manipulation/extraction & prepartion of data which will be required by the services.
+```
+GET /v1/cards/all
+```
 
-4. Microservices - contains the 3rd party services for example, notifications, fileUpload, sms etc. 
+Description: Returns a paginated list of cards based on optional filters and pagination parameters.
 
-5. Middlewares - contains the function that are used for validation, authentication, or handling the errors thrown by any service, controller or other functions.
+Parameters:
 
-6. Models - Contains the schema of collections and plugins which can be integrated into schema
-  - for example: we have paginate plugin that supports - pagination, filtering, sorting, ordering, location search, population 
+- `page` (optional, default: 1) - Page number for pagination.
+- `limit` (optional, default: 10) - Number of items per page.
+- `sortBy` (optional, default: createdAt) - Field to sort by (e.g., `createdAt`, `title`).
+- `sortOrder` (optional, default: desc) - Sorting order (`asc` for ascending, `desc` for descending).
+- `title` (optional) - Search term for filtering cards by title using RegExp.
+- `keywords` (optional) - Comma-separated list of keywords for filtering cards by tags.
 
-7. routes - contains versions of all api(s) routes. In initial setup you will have all routes starting from v1 later on you can upgrade.
+Request Example:
 
-8. services - contains the function that interacts with Database to do the CRUD operations. Since we are not using Typescript in this templates. It's highly recommended that you handle all your exception and checks in the respective controller before interacting with any service. Services are purely for performing CRUD ops, period.
+```
+GET /v1/cards/all?page=1&limit=10&sortBy=createdAt&sortOrder=desc&title=searchTerm&keywords=Tag1,Tag2
+```
 
-9. utils - contains the utility functions that you use all across the codebase.
+Response Example:
 
-10. validations - contains the validation schemas for each api. Its again highly recommended that if we are not writing test cases then please maintain validators so that we can avoid unnecessary edge cases or wrong request. First thing that we do is validate the request then move to authentication, period. 
+```json
+{
+  "page": 1,
+  "limit": 10,
+  "results": [
+    {
+      "_id": "1234",
+      "title": "Card Title",
+      "keywords": ["Tag1", "Tag2"],
+      "createdAt": "2024-06-21T12:00:00.000Z",
+      "updatedAt": "2024-06-21T12:00:00.000Z"
+      // other fields as per your card schema
+    }
+    // additional cards
+  ],
+  "totalPages": 3,
+  "totalResults": 25
+}
+```
 
-- app.js - contains  the configuration of your server
+### POST Route Documentation
 
-- index.js - boot up script
+#### Create a New Card
 
-**Before You Start**
-- You have to save the .env file locally with required variables mentioned in config/config.js
-- If you don't use any or specific microservice then please remove their validation & cancel their export from config/config.js, otherwise app won't run.
+Endpoint:
 
-_Codebase should be like a graden where everyone can move around easily and peacefully._
+```
+POST /v1/cards/create
+```
 
-**_HAPPY CODING..._**
+Description: Creates a new card with the provided data.
+
+Request Body:
+
+**Request Body:**
+
+- `title` (required): Title of the card.
+- `keywords` (required): Array of keywords/tags associated with the card.
+- `figmaLink` (optional): Link to the Figma design for the card.
+- `image` (required): Image file (JPG or PNG format) to upload to AWS S3.
+
+**Request Example:**
+
+```json
+{
+  "title": "Card Title",
+  "keywords": ["Tag1", "Tag2", "Tag3"],
+  "figmaLink": "https://figma.com",
+  "image": "<file data>"
+}
+```
+
+**Response Example (Success - HTTP 201 Created):**
+
+```json
+{
+  "_id": "5678",
+  "title": "Card Title",
+  "keywords": ["Tag1", "Tag2", "Tag3"],
+  "figmaLink": "https://figma.com",
+  "imageUrl": "https://example-bucket.s3.amazonaws.com/public/cards/card-image.jpg"
+}
+```
+
+**Response Example (Error - HTTP 400 Bad Request):**
+
+```json
+{
+  "error": "Validation Error: Title is required."
+}
+```
