@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 // Define the schema
 const cardSchema = new Schema({
-  id: {type: String, required: true},
   title: {type: String, required: true},
   keywords: {type: [String], required: true},
   figmaLink: {type: String, required: true},

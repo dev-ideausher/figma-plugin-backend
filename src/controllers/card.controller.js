@@ -17,11 +17,10 @@ const getAllCards = catchAsync(async (req, res) => {
 
 const createCard = catchAsync(async (req, res) => {
   try {
-    const {title, id, keywords, figmaLink, imageUrl, platform} = req.body;
+    const {title, keywords, figmaLink, imageUrl, platform} = req.body;
 
     const cardObj = {
       title,
-      id,
       keywords: JSON.parse(keywords),
       figmaLink,
       imageUrl,

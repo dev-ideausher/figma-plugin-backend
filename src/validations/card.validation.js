@@ -7,7 +7,6 @@ const createCard = {
     .keys(fileSchema('image', imageTypes, Object.values(imgTypeToExtension)))
     .required(),
   body: Joi.object().keys({
-    id: Joi.string().required(),
     title: Joi.string().required(),
     keywords: Joi.string(),
     figmaLink: Joi.string().required(),

@@ -36,6 +36,11 @@ app.use(compression());
 app.use(cors());
 app.options('*', cors());
 
+app.get('/test', async (req, res) => {
+  console.log('Test route hit');
+  res.status(200).json({message: 'Message recieved'});
+});
+
 // Reroute all API request starting with "/v1" route
 app.use('/v1', routes);
 
