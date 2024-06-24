@@ -72,7 +72,8 @@ Request Body:
 
 - `title` (required): Title of the card.
 - `id` (required): Id of the card.
-- `keywords` (required): Array of keywords/tags associated with the card.
+- `keywords` (required)(String): Array of keywords/tags associated with the card (NOTE: THE ARRAY SHOULD BE
+  STRINGIFIED!).
 - `figmaLink` (required): Link to the Figma design for the card.
 - `image` (required): Image file (JPG or PNG format) to upload to AWS S3.
 - `platform` (required): Platform Name (e.g. - Mobile App, Web etc.).
